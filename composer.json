@@ -1,0 +1,16 @@
+{
+    "name": "next/3",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joleg1c-c",
+            "email": "57722719+Joleg1c-c@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
