@@ -32,12 +32,7 @@ class CreateCommentCommand
     {
         $input = [];
 
-        foreach ($rawInput as $key => $argument) {
-            if (!str_contains($argument, '=')) {
-                $input[$key] = $argument;
-                continue;
-            }
-
+        foreach ($rawInput as $argument) {
             $parts = explode('=', $argument);
 
             if (count($parts) !== 2) {
@@ -49,7 +44,7 @@ class CreateCommentCommand
 
         foreach (['authorUuid', 'postUuid', 'text'] as $argument) {
             if (!array_key_exists($argument, $input)) {
-                throw new CommandException('Обязательный аргумент не указан: ', $argument);
+                throw new CommandException('Обязательный аргумент не найден: ', $argument);
             }
 
             if (empty($input[$argument])) {

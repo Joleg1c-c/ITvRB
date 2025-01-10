@@ -8,6 +8,7 @@ use App\Exception\PostNotFoundException;
 use App\Repository\Interfaces\PostsRepositoryInterface;
 use App\Model\Post;
 use PDO;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
 
 class PostsRepository implements PostsRepositoryInterface
@@ -39,7 +40,7 @@ class PostsRepository implements PostsRepositoryInterface
         );
     }
 
-    public function save(Post $post): bool
+    public function save(Post $post): void
     {
         $sql = "INSERT INTO `posts` (`uuid`, `authorUuid`, `title`, `text`) VALUES (:uuid, :authorUuid, :title, :text)";
         $prp = $this->db->prepare($sql);
@@ -51,18 +52,6 @@ class PostsRepository implements PostsRepositoryInterface
         ];
         $prp->execute($params);
 
-        return true;
-    }
-
-    public function delete(string $uuid): bool
-    {
-        $sql = "DELETE FROM `posts` WHERE uuid = :uuid";
-        $prp = $this->db->prepare($sql);
-        $params = [
-            'uuid' => $uuid,
-        ];
-        $prp->execute($params);
-
-        return true;
+        echo "Post was saved \n";
     }
 }
