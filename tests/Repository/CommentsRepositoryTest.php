@@ -1,9 +1,9 @@
 <?php
 
-use Itrvb\Lab4\Exception\CommentNotFoundException;
-use Itrvb\Lab4\Model\Comment;
-use Itrvb\Lab4\Repository\CommentsRepository;
-use Itrvb\Lab4\Repository\Interfaces\CommentsRepositoryInterface;
+use App\Exception\CommentNotFoundException;
+use App\Model\Comment;
+use App\Repository\CommentsRepository;
+use App\Repository\Interfaces\CommentsRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 

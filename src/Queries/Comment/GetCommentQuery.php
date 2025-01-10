@@ -2,23 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace App\Commands;
+namespace App\Queries\Comment;
 
 use App\Exception\CommandException;
-use App\Repository\Interfaces\PostsRepositoryInterface;
+use App\Model\Comment;
+use App\Repository\Interfaces\CommentsRepositoryInterface;
 
-class DeletePostCommand
+class GetCommentQuery
 {
     public function __construct(
-        private PostsRepositoryInterface $postsRepository
+        private CommentsRepositoryInterface $commentsRepository
     ) {
     }
 
-    public function handle(array $rawInput): void
+    public function handle(array $rawInput): Comment
     {
         $input = $this->parseRawInput($rawInput);
 
-        $this->postsRepository->delete($input['uuid']);
+        return $this->commentsRepository->get($input['uuid']);
     }
 
     public function parseRawInput(array $rawInput): array
@@ -46,7 +47,7 @@ class DeletePostCommand
             }
 
             if (empty($input[$argument])) {
-                throw new CommandException('Пустой аргумент: ', $argument);
+                throw new CommandException('Пустой аргумент:  ', $argument);
             }
         }
 

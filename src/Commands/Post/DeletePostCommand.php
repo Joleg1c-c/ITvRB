@@ -2,24 +2,23 @@
 
 declare(strict_types = 1);
 
-namespace App\Queries;
+namespace App\Commands\Post;
 
 use App\Exception\CommandException;
-use App\Model\Comment;
-use App\Repository\Interfaces\CommentsRepositoryInterface;
+use App\Repository\Interfaces\PostsRepositoryInterface;
 
-class GetCommentQuery
+class DeletePostCommand
 {
     public function __construct(
-        private CommentsRepositoryInterface $commentsRepository
+        private PostsRepositoryInterface $postsRepository
     ) {
     }
 
-    public function handle(array $rawInput): Comment
+    public function handle(array $rawInput): void
     {
         $input = $this->parseRawInput($rawInput);
 
-        return $this->commentsRepository->get($input['uuid']);
+        $this->postsRepository->delete($input['uuid']);
     }
 
     public function parseRawInput(array $rawInput): array

@@ -2,16 +2,16 @@
 
 namespace Http;
 
-use Itrvb\Lab4\Commands\CreatePostCommand;
-use Itrvb\Lab4\Exception\InvalidUuidException;
-use Itrvb\Lab4\Exception\UserNotFoundException;
-use Itrvb\Lab4\Http\Actions\Post\CreatePost;
-use Itrvb\Lab4\Http\Request;
-use Itrvb\Lab4\Model\User;
-use Itrvb\Lab4\Repository\Interfaces\PostsRepositoryInterface;
-use Itrvb\Lab4\Repository\Interfaces\UsersRepositoryInterface;
-use Itrvb\Lab4\Repository\PostsRepository;
-use Itrvb\Lab4\Repository\UsersRepository;
+use App\Commands\Post\CreatePostCommand;
+use App\Exception\InvalidUuidException;
+use App\Exception\UserNotFoundException;
+use App\Http\Actions\Post\CreatePost;
+use App\Http\Request;
+use App\Model\User;
+use App\Repository\Interfaces\PostsRepositoryInterface;
+use App\Repository\Interfaces\UsersRepositoryInterface;
+use App\Repository\PostsRepository;
+use App\Repository\UsersRepository;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;

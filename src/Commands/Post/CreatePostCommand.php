@@ -2,24 +2,30 @@
 
 declare(strict_types = 1);
 
-namespace App\Queries;
+namespace App\Commands\Post;
 
 use App\Exception\CommandException;
 use App\Model\Post;
 use App\Repository\Interfaces\PostsRepositoryInterface;
+use Symfony\Component\Uid\Uuid;
 
-class GetPostQuery
+class CreatePostCommand
 {
     public function __construct(
         private PostsRepositoryInterface $postsRepository
     ) {
     }
 
-    public function handle(array $rawInput): Post
+    public function handle(array $rawInput): void
     {
         $input = $this->parseRawInput($rawInput);
 
-        return $this->postsRepository->get($input['uuid']);
+        $this->postsRepository->save(new Post(
+            Uuid::v4(),
+            new Uuid($input['authorUuid']),
+            $input['title'],
+            $input['text'],
+        ));
     }
 
     public function parseRawInput(array $rawInput): array
@@ -41,13 +47,13 @@ class GetPostQuery
             $input[$parts[0]] = $parts[1];
         }
 
-        foreach (['uuid'] as $argument) {
+        foreach (['authorUuid', 'title', 'text'] as $argument) {
             if (!array_key_exists($argument, $input)) {
                 throw new CommandException('Обязательный аргумент не указан: ', $argument);
             }
 
             if (empty($input[$argument])) {
-                throw new CommandException('Пустой аргумент: ', $argument);
+                throw new CommandException('Пустой аргумент:  ', $argument);
             }
         }
 

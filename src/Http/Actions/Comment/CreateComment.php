@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Actions\Comment;
 
-use App\Commands\CreateCommentCommand;
+use App\Commands\Comment\CreateCommentCommand;
 use App\Exception\HttpException;
 use App\Http\Actions\ActionInterface;
 use App\Http\ErrorResponse;

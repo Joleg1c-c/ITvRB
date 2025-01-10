@@ -1,31 +1,24 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace App\Commands;
+namespace App\Queries\Like;
 
 use App\Exception\CommandException;
-use App\Model\Comment;
-use App\Repository\Interfaces\CommentsRepositoryInterface;
-use Symfony\Component\Uid\Uuid;
+use App\Repository\Interfaces\LikesRepositoryInterface;
 
-class CreateCommentCommand
+class GetLikesQuery
 {
     public function __construct(
-        private CommentsRepositoryInterface $commentsRepository
+        private LikesRepositoryInterface $likesRepository
     ) {
     }
 
-    public function handle(array $rawInput): void
+    public function handle(array $rawInput): array
     {
         $input = $this->parseRawInput($rawInput);
 
-        $this->commentsRepository->save(new Comment(
-            Uuid::v4(),
-            new Uuid($input['authorUuid']),
-            new Uuid($input['postUuid']),
-            $input['text'],
-        ));
+        return $this->likesRepository->getByPostUuid($input['postUuid']);
     }
 
     public function parseRawInput(array $rawInput): array
@@ -47,13 +40,13 @@ class CreateCommentCommand
             $input[$parts[0]] = $parts[1];
         }
 
-        foreach (['authorUuid', 'postUuid', 'text'] as $argument) {
+        foreach (['postUuid'] as $argument) {
             if (!array_key_exists($argument, $input)) {
                 throw new CommandException('Обязательный аргумент не указан: ', $argument);
             }
 
             if (empty($input[$argument])) {
-                throw new CommandException('Пустой аргумент: ', $argument);
+                throw new CommandException('Пустой аргумент:  ', $argument);
             }
         }
 

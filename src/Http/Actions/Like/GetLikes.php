@@ -2,37 +2,35 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\Actions\Post;
+namespace App\Http\Actions\Like;
 
-use App\Commands\Post\DeletePostCommand;
 use App\Exception\HttpException;
 use App\Http\Actions\ActionInterface;
 use App\Http\ErrorResponse;
 use App\Http\Request;
 use App\Http\Response;
 use App\Http\SuccessResponse;
+use App\Queries\Like\GetLikesQuery;
 
-class DeletePost implements ActionInterface
+class GetLikes implements ActionInterface
 {
-    public function __construct(
-        private DeletePostCommand $command,
-    ) {
+    public function __construct(private GetLikesQuery $query)
+    {
     }
 
     public function handle(Request $request): Response
     {
         try {
-            $uuid = $request->query('uuid');
-
-            $this->command->handle([
-                'uuid' => $uuid,
+            $postUuid = $request->query('post_uuid');
+            $data = $this->query->handle([
+                'postUuid' => $postUuid,
             ]);
         } catch (HttpException $ex) {
             return new ErrorResponse($ex->getMessage());
         }
 
         return new SuccessResponse([
-            'message' => 'Post was deleted successfully',
+            'likes' => $data,
         ]);
     }
 }

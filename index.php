@@ -4,10 +4,10 @@ require_once './vendor/autoload.php';
 
 $db = new PDO('sqlite:' . __DIR__ . '/db.sqlite');
 
-use App\Commands\CreateCommentCommand;
-use App\Commands\CreatePostCommand;
-use App\Queries\GetCommentQuery;
-use App\Queries\GetPostQuery;
+use App\Commands\Comment\CreateCommentCommand;
+use App\Commands\Post\CreatePostCommand;
+use App\Queries\Comment\GetCommentQuery;
+use App\Queries\Post\GetPostQuery;
 use App\Repository\PostsRepository;
 use App\Repository\CommentsRepository;
 

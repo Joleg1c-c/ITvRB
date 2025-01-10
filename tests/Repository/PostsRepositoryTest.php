@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Itrvb\Lab4\Exception\PostNotFoundException;
-use Itrvb\Lab4\Model\Post;
-use Itrvb\Lab4\Repository\Interfaces\PostsRepositoryInterface;
-use Itrvb\Lab4\Repository\PostsRepository;
+use App\Exception\PostNotFoundException;
+use App\Model\Post;
+use App\Repository\Interfaces\PostsRepositoryInterface;
+use App\Repository\PostsRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Actions\Post;
 
-use App\Commands\CreatePostCommand;
+use App\Commands\Post\CreatePostCommand;
 use App\Exception\HttpException;
 use App\Exception\InvalidUuidException;
 use App\Http\Actions\ActionInterface;
