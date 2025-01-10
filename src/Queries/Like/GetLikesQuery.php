@@ -46,7 +46,7 @@ class GetLikesQuery
             }
 
             if (empty($input[$argument])) {
-                throw new CommandException('Пустой аргумент:  ', $argument);
+                throw new CommandException('Пустой аргумент: ', $argument);
             }
         }
 

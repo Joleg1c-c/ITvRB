@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exception;
+namespace Itrvb\Lab4\Exception;
 
 class InvalidUuidException extends \Exception
 {

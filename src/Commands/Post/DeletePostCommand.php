@@ -42,11 +42,11 @@ class DeletePostCommand
 
         foreach (['uuid'] as $argument) {
             if (!array_key_exists($argument, $input)) {
-                throw new CommandException('Обязательный аргумент не указан: ', $argument);
+                throw new CommandException('No required argument provided: ', $argument);
             }
 
             if (empty($input[$argument])) {
-                throw new CommandException('Пустой аргумент:  ', $argument);
+                throw new CommandException('Empty argument provided: ', $argument);
             }
         }
 

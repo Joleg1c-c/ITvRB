@@ -8,15 +8,13 @@ use App\Exception\UserNotFoundException;
 use App\Model\User;
 use App\Repository\Interfaces\UsersRepositoryInterface;
 use PDO;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\UuidV4;
 
 class UsersRepository implements UsersRepositoryInterface
 {
-    private PDO $db;
-
-    public function __construct(PDO $db)
+    public function __construct(private PDO $db, private LoggerInterface $logger)
     {
-        $this->db = $db;
     }
 
     public function get(string $uuid): User
@@ -28,6 +26,7 @@ class UsersRepository implements UsersRepositoryInterface
         $result = $prp->fetch(PDO::FETCH_ASSOC);
 
         if (!$result) {
+            $this->logger->warning('User not found', ['uuid' => $uuid]);
             throw new UserNotFoundException();
         }
 
@@ -47,6 +46,9 @@ class UsersRepository implements UsersRepositoryInterface
             'firstName' => $user->firstName,
             'lastName' => $user->lastName,
         ];
-        $prp->execute($params);
+
+        if ($prp->execute($params)) {
+            $this->logger->info('User was created with uuid ' . $user->uuid);
+        }
     }
 }

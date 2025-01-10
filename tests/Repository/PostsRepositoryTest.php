@@ -6,12 +6,17 @@ use App\Exception\PostNotFoundException;
 use App\Model\Post;
 use App\Repository\Interfaces\PostsRepositoryInterface;
 use App\Repository\PostsRepository;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
 
 class PostsRepositoryTest extends TestCase
 {
     private PostsRepositoryInterface $postsRepository;
+
+    private static LoggerInterface $logger;
 
     private static Uuid $uuid;
 
@@ -20,7 +25,8 @@ class PostsRepositoryTest extends TestCase
     public function setUp(): void
     {
         $pdo = new PDO('sqlite:' . './../../my_database.sqlite');
-        $this->postsRepository = new PostsRepository($pdo);
+        self::$logger = new Logger('my_logger_test', [new StreamHandler(__DIR__ . '/../../logs/test.log')]);
+        $this->postsRepository = new PostsRepository($pdo, self::$logger);
         if (!isset(self::$uuid)) {
             self::$uuid = Uuid::v4();
             self::$authorUuid = Uuid::v4();

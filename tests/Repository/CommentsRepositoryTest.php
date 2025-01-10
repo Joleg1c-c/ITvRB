@@ -4,12 +4,17 @@ use App\Exception\CommentNotFoundException;
 use App\Model\Comment;
 use App\Repository\CommentsRepository;
 use App\Repository\Interfaces\CommentsRepositoryInterface;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
 
 class CommentsRepositoryTest extends TestCase
 {
     private CommentsRepositoryInterface $commentsRepository;
+
+    private static LoggerInterface $logger;
 
     private static Uuid $uuid;
 
@@ -20,7 +25,8 @@ class CommentsRepositoryTest extends TestCase
     public function setUp(): void
     {
         $pdo = new PDO('sqlite:' . './../../my_database.sqlite');
-        $this->commentsRepository = new CommentsRepository($pdo);
+        self::$logger = new Logger('my_logger_test', [new StreamHandler(__DIR__ . '/../../logs/test.log')]);
+        $this->commentsRepository = new CommentsRepository($pdo, self::$logger);
         if (!isset(self::$uuid)) {
             self::$uuid = Uuid::v4();
             self::$authorUuid = Uuid::v4();

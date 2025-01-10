@@ -8,16 +8,14 @@ use App\Exception\CommentNotFoundException;
 use App\Model\Comment;
 use App\Repository\Interfaces\CommentsRepositoryInterface;
 use PDO;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
 
 class CommentsRepository implements CommentsRepositoryInterface
 {
-    private PDO $db;
-
-    public function __construct(PDO $db)
+    public function __construct(private PDO $db, private LoggerInterface $logger)
     {
-        $this->db = $db;
     }
 
     public function get(string $uuid): Comment
@@ -29,6 +27,7 @@ class CommentsRepository implements CommentsRepositoryInterface
         $result = $prp->fetch(PDO::FETCH_ASSOC);
 
         if (!$result) {
+            $this->logger->warning('Comment not found', ['uuid' => $uuid]);
             throw new CommentNotFoundException();
         }
 
@@ -50,7 +49,10 @@ class CommentsRepository implements CommentsRepositoryInterface
             'postUuid' => $comment->postUuid,
             'text' => $comment->text
         ];
-        $prp->execute($params);
+
+        if ($prp->execute($params)) {
+            $this->logger->info('Comment was created with uuid: ' . $comment->uuid);
+        }
 
         echo "Comment was saved \n";
     }
