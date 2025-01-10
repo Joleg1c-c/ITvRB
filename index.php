@@ -4,11 +4,11 @@ require_once './vendor/autoload.php';
 
 $db = new PDO('sqlite:' . __DIR__ . '/db.sqlite');
 
-use App\Commands\Comment\CreateCommentCommand;
 use App\Commands\Post\CreatePostCommand;
-use App\Queries\Comment\GetCommentQuery;
-use App\Queries\Post\GetPostQuery;
+use App\Commands\Comment\CreateCommentCommand;
 use App\Repository\PostsRepository;
+use App\Queries\Post\GetPostQuery;
+use App\Queries\Comment\GetCommentQuery;
 use App\Repository\CommentsRepository;
 
 $postsRepository = new PostsRepository($db);
@@ -18,7 +18,7 @@ $postCommand = new CreatePostCommand($postsRepository);
 $commentCommand = new CreateCommentCommand($commentsRepository);
 
 $postCommand->handle($argv);      // создание поста
-//$commentCommand->handle($argv); // создание комментария
+$commentCommand->handle($argv); // создание комментария
 
 $postQuery = new GetPostQuery($postsRepository);
 $commentQuery = new GetCommentQuery($commentsRepository);
