@@ -12,5 +12,7 @@
             "email": "57722719+Joleg1c-c@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "fakerphp/faker": "^1.24"
+    }
 }

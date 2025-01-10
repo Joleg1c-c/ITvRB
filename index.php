@@ -1,18 +1,43 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
 
+class Autoloader
+{
+    private $baseDir;
+
+    public function __construct($baseDir)
+    {
+        $this->baseDir = rtrim($baseDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        spl_autoload_register([$this, 'loadClass']);
+    }
+
+    public function loadClass($className): void
+    {
+        $filePath = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+        $filePath = str_replace('_', DIRECTORY_SEPARATOR, $filePath);
+        $filePath .= '.php';
+        
+        $fullPath = $this->baseDir . $filePath;
+
+        if (file_exists($fullPath)) {
+            require_once $fullPath;
+        }
+    }
+}
+require_once './vendor/autoload.php';
 use Faker\Factory;
 use App\Article;
-use App\Comment;
-use App\User;
 
 $faker = Factory::create();
 
-$user = new User(1, $faker->firstName, $faker->lastName);
-$article = new Article(1, $user->id, $faker->sentence, $faker->paragraph);
-$comment = new Comment(1, $user->id, $article->id, $faker->sentence);
+$autoloader = new Autoloader('src');
+$autoloader->loadClass('User');
 
-echo "User: {$user->firstName} {$user->lastName}<br>";
-echo "Article: {$article->title}<br>";
-echo "Comment: {$comment->text}<br>";
-?>
+$user = new User();
+$user->firstName = $faker->firstName;
+echo $user->firstName;
+echo "User: {$user->firstName}\n";
+
+
+$article = new Article(1, $user->id, $faker->sentence, $faker->paragraph);
+$article->title = $faker->sentence;
+echo "Article: {$article->title}\n";
