@@ -1,26 +1,20 @@
 <?php
 
-class Product {
+abstract class Product {
     public $id;
     public $name;
-    public $description;
-    public $price;
-    public $stock;
+    public $basePrice;
 
-    public function __construct($id, $name, $description, $price, $stock) {
+    public function __construct($id, $name, $basePrice) {
         $this->id = $id;
         $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
-        $this->stock = $stock;
+        $this->basePrice = $basePrice;
     }
 
-    public function getPriceWithDiscount($discount) {
-        return $this->price - ($this->price * $discount / 100);
-    }
-
-    public function updateStock($quantity) {
-        $this->stock -= $quantity;
+    abstract public function calculateFinalPrice($amount);
+    
+    public function getRevenue($amount) {
+        return $this->calculateFinalPrice($amount);
     }
 }
 
