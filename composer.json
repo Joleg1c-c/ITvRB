@@ -16,7 +16,8 @@
         "symfony/uid": "^7.1",
       "ext-sqlite3": "*",
       "ext-pdo": "*",
-        "ramsey/uuid": "^4.7"
+      "ext-mbstring": "*",
+      "ext-http": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.4"
