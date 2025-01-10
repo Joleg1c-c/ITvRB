@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'next/3',
-        'pretty_version' => 'dev-Lab_3',
-        'version' => 'dev-Lab_3',
-        'reference' => 'd41ba7e975168c17423c3f8e27f1302ff1cc075b',
+        'pretty_version' => 'dev-Lab_4',
+        'version' => 'dev-Lab_4',
+        'reference' => '7cdf78deec0650741960c8d231540cd61b11a4cb',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'next/3' => array(
-            'pretty_version' => 'dev-Lab_3',
-            'version' => 'dev-Lab_3',
-            'reference' => 'd41ba7e975168c17423c3f8e27f1302ff1cc075b',
+            'pretty_version' => 'dev-Lab_4',
+            'version' => 'dev-Lab_4',
+            'reference' => '7cdf78deec0650741960c8d231540cd61b11a4cb',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
